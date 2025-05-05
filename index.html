@@ -9,7 +9,6 @@
 			}
 			
 			.cremesicleImg {
-				vertical-align: middle;
 				max-width: 90vw;
 				max-height: 90vh;
 			}
@@ -20,8 +19,8 @@
 		</style>
 		<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, width=device-width, user-scalable=no" />
 	</head>
-	<body onload="loadPage()">
-		<h1>Cremesicle "Pooty Cat" Terenzi</h1>
+	<body onload="initPage()">
+		<h1 id='title'>Cremesicle "Pooty Cat" Terenzi</h1>
 		<h2>2006 - 2025</h2>
 		<h3>A perfect cat.</h3>
 		<div id='picsDiv'></div>
@@ -35,25 +34,56 @@
 				}
 			}
 			
-			function loadPage()
+			image_count = 56;
+			indexes = [];
+			page_num = 0;
+			
+			function initPage()
 			{
-				var image_count = 9;
-				var indexes = [];
 				for (var i = 1; i < image_count + 1; i += 1)
 				{
 					indexes.push(i);
 				}
 				shuffleArray(indexes);
 				
+				loadPage();
+			}
+			
+			function loadPage()
+			{
 				var html = "";
 				
-				for (var i = 0; i < image_count; i += 1)
+				for (var i = page_num*10; i < Math.min(page_num*10 + 10, image_count); i += 1)
 				{
 					var index = indexes[i];
 					html += `<img class='cremesicleImg' src='cremesicle${index}.jpg'>`
 				}
 				
+				if (page_num > 0)
+				{
+					html += "<h3 onclick='prevPage()'><a href='#title'>Previous</a></h3>";
+				}
+				
+				html += `<h3>Page ${page_num+1} of ${Math.ceil(image_count/10)}</h3>`
+			
+				if (page_num*10 + 10 < image_count)
+				{
+					html += "<h3 onclick='nextPage()'><a href='#title'>Next</a></h3>";
+				}
+				
 				$('#picsDiv').html(html);
+			}
+			
+			function nextPage()
+			{
+				page_num += 1;
+				loadPage();
+			}
+			
+			function prevPage()
+			{
+				page_num -= 1;
+				loadPage();
 			}
 			
 		</script>
