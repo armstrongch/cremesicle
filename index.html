@@ -34,7 +34,7 @@
 				}
 			}
 			
-			image_count = 118;
+			image_count = 263;
 			indexes = [];
 			page_num = 0;
 			
@@ -56,7 +56,14 @@
 				for (var i = page_num*10; i < Math.min(page_num*10 + 10, image_count); i += 1)
 				{
 					var index = indexes[i];
-					html += `<img class='cremesicleImg' src='cremesicle${index}.jpg'>`
+					if (index == 239)
+					{
+						html += `<img class='cremesicleImg' src='cremesicle239.png'>`
+					}
+					else
+					{
+						html += `<img class='cremesicleImg' src='cremesicle${index}.jpg'>`
+					}
 				}
 				
 				if (page_num > 0)
